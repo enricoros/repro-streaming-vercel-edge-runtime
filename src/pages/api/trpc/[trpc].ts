@@ -52,6 +52,7 @@ export const config = {
 
 // export API handler
 export default async function handler(req: NextRequest) {
+  console.error('Request:', req);
   return fetchRequestHandler({
     endpoint: '/api/trpc',
     router: appRouter,
