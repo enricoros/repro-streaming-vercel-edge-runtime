@@ -7,7 +7,19 @@ import { publicProcedure, router } from '~/server/trpc';
 import type { NextRequest } from 'next/server';
 import { z } from 'zod';
 
+let srvRunCount = 0;
+
 const appRouter = router({
+
+  // [REPRO] Adding Async Generator's example - https://trpc.io/docs/client/links/httpBatchStreamLink
+  iterable: publicProcedure.query(async function* () {
+    yield { t: 'srvRunCount', c: ++srvRunCount };
+    for (let i = 0; i < 10; i++) {
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      yield { t: 'tick', i };
+    }
+  }),
+
   greeting: publicProcedure
     // This is the input schema of your procedure
     // 💡 Tip: Try changing this and see type errors on the client straight away

@@ -1,4 +1,4 @@
-import { httpBatchLink } from '@trpc/client';
+import { createTRPCClient, httpBatchLink, httpBatchStreamLink } from '@trpc/client';
 import { createTRPCNext } from '@trpc/next';
 import type { AppRouter } from '../pages/api/trpc/[trpc]';
 
@@ -17,6 +17,16 @@ function getBaseUrl() {
   // assume localhost
   return `http://localhost:${process.env.PORT ?? 3000}`;
 }
+
+
+export const trpcStreamClient = createTRPCClient<AppRouter>({
+  links: [
+    httpBatchStreamLink({
+      url: getBaseUrl() + '/api/trpc',
+    }),
+  ],
+});
+
 
 export const trpc = createTRPCNext<AppRouter>({
   config() {
