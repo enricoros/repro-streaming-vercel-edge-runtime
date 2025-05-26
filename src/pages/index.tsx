@@ -39,7 +39,7 @@ function StreamingExample() {
       <h2>Streaming Data:</h2>
       <h3>Server-side streams count: {srvRunCount ?? 0}</h3>
       <button onClick={streamForAFewSeconds}>Start Streaming</button>
-      {error && <div style={{ color: 'red', fontSize: '1rem', outline: '1px solid red', padding: '1rem' }}>{error.message}</div>}
+      {error && <div style={{ color: 'red', fontSize: '1rem', outline: '1px solid red', padding: '1rem' }}>Error: {error.message}<br /><pre>Stack trace: {error.stack}</pre></div>}
       <ul>
         {data?.map((item, index) => (
           <li key={index}>{item}</li>
