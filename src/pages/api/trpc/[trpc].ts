@@ -13,10 +13,10 @@ const appRouter = router({
 
   // [REPRO] Adding Async Generator's example - https://trpc.io/docs/client/links/httpBatchStreamLink
   iterable: publicProcedure.query(async function* () {
-    yield { t: 'srvRunCount', c: ++srvRunCount };
-    for (let i = 0; i < 10; i++) {
+    yield { t: '_run' as const, c: ++srvRunCount };
+    for (let i = 0; i < 3; i++) {
       await new Promise((resolve) => setTimeout(resolve, 500));
-      yield { t: 'tick', i };
+      yield { t: '_tick' as const, i };
     }
   }),
 
